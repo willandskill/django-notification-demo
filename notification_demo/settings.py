@@ -10,6 +10,41 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+
+##########
+# FIREBASE
+##########
+import os
+from firebase_admin import initialize_app
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))      # '/home/username/django_notifications/django_notifications-be/projectile'
+REPO_DIR = os.path.realpath(os.path.join(BASE_DIR, '..'))                   # '/home/username/django_notifications/django_notifications-be'
+HOME_DIR = os.path.realpath(os.path.join(REPO_DIR, '..'))                   # '/home/username/django_notifications'
+
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"]= f'{BASE_DIR}/credentials/firebase_credentials.json'
+
+# Optional ONLY IF you have initialized a firebase app already:
+# Visit https://firebase.google.com/docs/admin/setup/#python
+# for more options for the following:
+# Store an environment variable called GOOGLE_APPLICATION_CREDENTIALS
+# which is a path that point to a json file with your credentials.
+# Additional arguments are available: credentials, options, name
+FIREBASE_APP = initialize_app()
+# To learn more, visit the docs here:
+# https://cloud.google.com/docs/authentication/getting-started>
+
+FCM_DJANGO_SETTINGS = {
+     # default: _('FCM Django')
+    "APP_VERBOSE_NAME": "TouchBase",
+     # true if you want to have only one active device per registered user at a time
+     # default: False
+    "ONE_DEVICE_PER_USER": False,
+     # devices to which notifications cannot be sent,
+     # are deleted upon receiving error response from FCM
+     # default: False
+    "DELETE_INACTIVE_DEVICES": True,
+}
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
